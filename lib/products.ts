@@ -1,4 +1,5 @@
 export type Colour = { name: string; hex: string };
+export type Audience = "men" | "women" | "unisex";
 
 export type Category = {
   slug: string;
@@ -7,6 +8,7 @@ export type Category = {
   desc: string;
   layout: "big" | "wide" | "small";
   image: string;
+  audience: Audience;
 };
 
 export type Product = {
@@ -23,12 +25,12 @@ export type Product = {
 };
 
 export const categories: Category[] = [
-  { slug: "office-shoes", name: "Office shoes", group: "Footwear", desc: "Formal and oxford styles", layout: "big", image: "/products/office-shoes.jpg" },
-  { slug: "handbags", name: "Handbags", group: "Bags", desc: "Totes, satchels and crossbody", layout: "wide", image: "/products/handbags.jpg" },
-  { slug: "canvas", name: "Canvas", group: "Footwear", desc: "Everyday sneakers", layout: "small", image: "/products/canvas.jpg" },
-  { slug: "laptop-bags", name: "Laptop bags", group: "Bags", desc: "Padded, professional", layout: "small", image: "/products/laptop-bags.jpg" },
-  { slug: "easy-footwears", name: "Easy footwears", group: "Footwear", desc: "Slippers, slides, sandals", layout: "small", image: "/products/easy-footwears.jpg" },
-  { slug: "school-bags", name: "School bags", group: "Bags", desc: "Backpacks built to last", layout: "wide", image: "/products/school-bags.jpg" }
+  { slug: "office-shoes", name: "Office shoes", group: "Footwear", desc: "Formal and oxford styles", layout: "big", image: "/products/office-shoes.jpg", audience: "men" },
+  { slug: "handbags", name: "Handbags", group: "Bags", desc: "Totes, satchels and crossbody", layout: "wide", image: "/products/handbags.jpg", audience: "women" },
+  { slug: "canvas", name: "Canvas", group: "Footwear", desc: "Everyday sneakers", layout: "small", image: "/products/canvas.jpg", audience: "unisex" },
+  { slug: "laptop-bags", name: "Laptop bags", group: "Bags", desc: "Padded, professional", layout: "small", image: "/products/laptop-bags.jpg", audience: "unisex" },
+  { slug: "easy-footwears", name: "Easy footwears", group: "Footwear", desc: "Slippers, slides, sandals", layout: "small", image: "/products/easy-footwears.jpg", audience: "unisex" },
+  { slug: "school-bags", name: "School bags", group: "Bags", desc: "Backpacks built to last", layout: "wide", image: "/products/school-bags.jpg", audience: "unisex" }
 ];
 
 const SH = ["39", "40", "41", "42", "43", "44", "45"];
@@ -75,3 +77,4 @@ export const categoryBySlug = (slug: string) => categories.find((c) => c.slug ==
 export const productBySlug = (slug: string) => products.find((p) => p.slug === slug);
 export const productsByCategory = (slug: string) => products.filter((p) => p.category === slug);
 export const featuredProducts = () => products.filter((p) => p.featured);
+export const audienceOf = (p: Product) => categoryBySlug(p.category)?.audience || "unisex";

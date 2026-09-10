@@ -1,9 +1,30 @@
+"use client";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { categories } from "@/lib/products";
 
 export default function CategoryGrid() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add("visible"), i * 80);
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    ref.current.querySelectorAll(".cat").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <div className="bento">
+    <div className="bento" id="catgrid" ref={ref} style={{ scrollMarginTop: 20 }}>
       {categories.map((c) => (
         <Link key={c.slug} href={`/category/${c.slug}`} className={`cat ${c.layout}`}>
           <img className="bg" src={c.image} alt={c.name} />

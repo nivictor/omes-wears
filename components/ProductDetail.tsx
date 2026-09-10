@@ -15,56 +15,31 @@ export default function ProductDetail({ p }: { p: Product }) {
   const cat = categoryBySlug(p.category);
 
   function addToCart() {
-    if (!size) {
-      setErr(true);
-      return;
-    }
-    add(
-      { id: p.id, slug: p.slug, name: p.name, category: p.category, price: p.price, size, colour: colour.name, image: p.image },
-      qty
-    );
+    if (!size) { setErr(true); return; }
+    add({ id: p.id, slug: p.slug, name: p.name, category: p.category, price: p.price, size, colour: colour.name, image: p.image }, qty);
     router.push("/basket");
   }
 
   return (
     <div className="pd">
-      <div className="gallery">
-        <img src={p.image} alt={p.name} />
-      </div>
+      <div className="gallery"><img src={p.image} alt={p.name} /></div>
       <div>
         <div className="eyebrow">{cat?.name}</div>
         <h1 style={{ marginTop: 8 }}>{p.name}</h1>
         <div className="price">{ngn(p.price)}</div>
         <div className="desc">{p.description}</div>
-
         <div className="flabel">Select size</div>
         <div className="opts">
           {p.sizes.map((s) => (
-            <button
-              key={s}
-              className={`opt ${size === s ? "on" : ""}`}
-              onClick={() => {
-                setSize(s);
-                setErr(false);
-              }}
-            >
-              {s}
-            </button>
+            <button key={s} className={`opt ${size === s ? "on" : ""}`} onClick={() => { setSize(s); setErr(false); }}>{s}</button>
           ))}
         </div>
-
         <div className="flabel">Colour &mdash; {colour.name}</div>
         <div className="opts">
           {p.colours.map((c) => (
-            <span
-              key={c.hex}
-              className={`cdot ${colour.hex === c.hex ? "on" : ""}`}
-              style={{ background: c.hex }}
-              onClick={() => setColour(c)}
-            />
+            <span key={c.hex} className={`cdot ${colour.hex === c.hex ? "on" : ""}`} style={{ background: c.hex }} onClick={() => setColour(c)} />
           ))}
         </div>
-
         <div className="qtyrow">
           <div>
             <div className="flabel" style={{ marginBottom: 6 }}>Quantity</div>
@@ -75,7 +50,6 @@ export default function ProductDetail({ p }: { p: Product }) {
             </div>
           </div>
         </div>
-
         <button className="btn btn-primary btn-block" onClick={addToCart}>Add to basket</button>
         {err && <div className="inline-err">Please choose a size first.</div>}
       </div>

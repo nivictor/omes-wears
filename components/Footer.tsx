@@ -7,10 +7,7 @@ export default function Footer() {
     <footer className="ft">
       <div className="fwrap">
         <div className="fcol fbrand">
-          <div className="wordmark">
-            <b>{parts[0]}</b>
-            <span> {parts.slice(1).join(" ")}</span>
-          </div>
+          <div className="wordmark"><b>{parts[0]}</b><span> {parts.slice(1).join(" ")}</span></div>
           <p>{config.brand.tagline}</p>
         </div>
         <div className="fcol">
@@ -26,13 +23,14 @@ export default function Footer() {
           <Link href="/category/school-bags">School bags</Link>
         </div>
         <div className="fcol">
-          <h5>Reach us</h5>
-          <span className="fx">{config.contact.phone}</span>
+          <h5>{config.brand.name}</h5>
+          <Link href="/about">Our craft</Link>
+          <Link href="/contact">Contact</Link>
+          <span className="fx" style={{ marginTop: 8 }}>{config.contact.phone}</span>
           <span className="fx">{config.contact.email}</span>
-          <span className="fx">{config.contact.facebook}</span>
         </div>
       </div>
-      <div className="fbottom">© {new Date().getFullYear()} {config.brand.name}. Handmade in Nigeria.</div>
+      <div className="fbottom">&copy; {new Date().getFullYear()} {config.brand.name}. Handmade in Nigeria.</div>
     </footer>
   );
 }

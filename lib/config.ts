@@ -4,7 +4,7 @@ export const config = {
     name: "Omes wears",
     tagline: "Handmade shoes, bags and easy wears. Made to order, made to last."
   },
-  // Nigeria format: country code first, no plus, no leading zero. 0806... becomes 234806...
+  // Nigeria format: country code, no plus, no leading zero. 0806... becomes 234806...
   whatsappNumber: "2348061234567",
   bank: {
     name: "United Bank for Africa (UBA)",

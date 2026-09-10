@@ -2,28 +2,17 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 export type CartItem = {
-  key: string;
-  id: number;
-  slug: string;
-  name: string;
-  category: string;
-  price: number;
-  size: string;
-  colour: string;
-  image: string;
-  qty: number;
+  key: string; id: number; slug: string; name: string;
+  category: string; price: number; size: string; colour: string;
+  image: string; qty: number;
 };
 
 type AddInput = Omit<CartItem, "key" | "qty">;
 
 type CartContextType = {
-  items: CartItem[];
-  add: (item: AddInput, qty: number) => void;
-  remove: (key: string) => void;
-  setQty: (key: string, qty: number) => void;
-  clear: () => void;
-  count: number;
-  subtotal: number;
+  items: CartItem[]; add: (item: AddInput, qty: number) => void;
+  remove: (key: string) => void; setQty: (key: string, qty: number) => void;
+  clear: () => void; count: number; subtotal: number;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -34,18 +23,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw) as CartItem[]);
-    } catch {}
+    try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) setItems(JSON.parse(raw)); } catch {}
     setLoaded(true);
   }, []);
 
   useEffect(() => {
     if (!loaded) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
   }, [items, loaded]);
 
   const add = (item: AddInput, qty: number) => {
@@ -60,7 +44,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const setQty = (key: string, qty: number) =>
     setItems((prev) => prev.map((x) => (x.key === key ? { ...x, qty: Math.max(1, qty) } : x)));
   const clear = () => setItems([]);
-
   const count = items.reduce((a, x) => a + x.qty, 0);
   const subtotal = items.reduce((a, x) => a + x.price * x.qty, 0);
 
